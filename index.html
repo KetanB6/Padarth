@@ -3,94 +3,61 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Padarth</title>
-        <style>
-            body {
-                background-color: rgb(50, 49, 49);
-            }
-
-            #head1 {
-                cursor: default;
-                position: relative;
-                top : 2%;
-                left : 2%;
-                font-size: 40px;
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-                color :rgb(35, 232, 5);
-            }
-
-            button {
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
-                background-color: rgb(248, 174, 3);
-                border: 5px #faf9f9 solid;
-                height: 7%;
-                font-size: 20px;
-                color: rgb(247, 248, 249);
-                border-radius: 10px;
-                position: fixed;
-                top: 75%;
-                font-weight: 530;
-                left:43%;
-                cursor: pointer;
-            } 
-            button:hover{
-                background-color: rgb(248, 190, 55);
-                color: rgb(242, 244, 245);
-            }
-
-            #retake{
-                top : 30%;
-                left : 74%;
-                visibility:hidden;
-            }
-
-            #uplod{
-                top : 40%;
-                left : 74%;
-                visibility:hidden;
-            }
-
-            video, canvas, img { 
-                position: fixed;
-                top: 15%;
-                left:34%;
-                width: 100%; 
-                height: 100%;
-                border-radius: 10px;
-                max-height: 300px;
-                max-width: 400px; 
-            }
-
-            #captured-image{
-                position: fixed;
-                top: 15%;
-                left:34%;
-                width: 100%; 
-                height: 100%;
-                border-radius: 10px;
-                max-height: 300px;
-                max-width: 400px; 
-                border: 10px rgb(228, 222, 222) solid;
-            }
-            
-            #leaf{
-                height:100px;
-                width:100px;
-                top:10px;
-                left:40px;
-            }
-
-        
-        </style>
+        <link rel="stylesheet" href="Padarth.css">
         <body>
+
             <img src="https://raw.githubusercontent.com/KetanB6/Portfolio/43507ea313b4970e7c3f8a06a38962a4988e8b19/leaf.png" width="10px" id="leaf">
             <h2 id = "head1">Padarth</h2>
+
+            <img src="https://raw.githubusercontent.com/KetanB6/Padarth/81846f0c82a537489f0604a0e7bc23860c39d1be/ing.png" id="bowl">
 
             <video id="webcam" autoplay></video>
             <button id="capture" style="display: none;">Capture Image</button>
             <canvas id="canvas" style="display: none;"></canvas>
             <img id="captured-image" alt="Captured Image" style="display: none;">
             <input type="file" id="upload" style="display: none;">
-            <button id="scan">Scan Ingredients</button>
+            <button id="scan">Scan ingredients</button>
+
+            <input type="file" id = "file" accept="image/*" style = "display: none;">
+            <label id="up" for="file">Upload ingredients</label>
+            <script>
+                function hide() {
+                    scanBtn.style.visibility = 'hidden';
+                    search.style.visibility = 'hidden';
+                }
+                up.addEventListener('click', hide);
+                const fileInput = document.getElementById("file");
+                let uploadedImageUrl = "";
+
+                fileInput.addEventListener("change", function(event) {
+                    const file = event.target.files[0]; // Get the uploaded file
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            uploadedImageUrl = e.target.result; // Store image URL in variable
+                            alert("Image uploaded successfully!"); // Show popup message
+                            console.log("Uploaded Image URL:", uploadedImageUrl); // Check in console
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            </script>
+
+            <button id="search" onclick="pop_panel()">Search ingredients</button>
+            <div id = "panel">
+                <h1 id = "head2" style="color:aqua">Details</h1>
+                <input type="text" id="ingr" placeholder="Ingredient name">
+                <button id = "detail_btn">Search</button>
+            </div>
+            <script>
+                const panel = document.getElementById('panel');
+                function pop_panel(){
+                    panel.style.visibility='visible';
+                    scanBtn.style.visibility='hidden';
+                    up.style.visibility='hidden';
+                    search.style.visibility='hidden';
+                }
+            </script>
             <button id="retake">Retake</button>
             <button id="uplod">Upload</button>
 
@@ -103,24 +70,28 @@
                 const canvas = document.getElementById('canvas');
                 const capturedImage = document.getElementById('captured-image');
                 const retake = document.getElementById('retake');
+                const up = document.getElementById('up');
+                const search = document.getElementById('search');
         
                 let stream = null;
         
                 // Open webcam
                 async function startWebcam() {
                     try {
-        stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "environment" }  // Use "user" for the front camera
-        });
-        webcam.srcObject = stream;
-        webcam.style.display = 'block';
-        captureBtn.style.display = 'inline';
-        scanBtn.style.display = 'none';
-    } catch (error) {
-        console.error("Error accessing webcam:", error);
-        alert("Camera access denied or unavailable.");
-    }
-}
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: "environment" }  
+                    });
+                    webcam.srcObject = stream;
+                    webcam.style.display = 'block';
+                    captureBtn.style.display = 'inline';
+                    scanBtn.style.display = 'none';
+                    up.style.visibility = 'hidden';
+                    search.style.visibility = 'hidden';
+                } catch (error) {
+                    console.error("Error accessing webcam:", error);
+                    alert("Camera access denied or unavailable.");
+                }
+                }       
 
                 scanBtn.addEventListener('click', startWebcam);
 

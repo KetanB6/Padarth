@@ -27,7 +27,7 @@ public class MyServlet extends HttpServlet {
     String iUrl;   
     String ingredients;
     String manual;
-    private static final String API_key= "AIzaSyBZuHo4PacI9km5bfuHcmBcih-ArD4WnVw";
+    private static final String API_key= "XXXXXXXXXXXXXXXXXXXXXXXXXXX";
 	private static final String API_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_key;
 	
     public MyServlet() {

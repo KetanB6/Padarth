@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Padarth</title>
+        <link rel="stylesheet" href="style2.css">
+        </head>
+        <body>
+            <img src="https://raw.githubusercontent.com/KetanB6/Portfolio/43507ea313b4970e7c3f8a06a38962a4988e8b19/leaf.png" width="10px" id="leaf">
+            <img src="https://raw.githubusercontent.com/KetanB6/Padarth/81846f0c82a537489f0604a0e7bc23860c39d1be/ing.png" id="bowl">
+            <h2 id = "head1">Padarth</h2>
+            <button onclick="window.location.reload(true)" id="back">Back</button>
+
+            <!--Scan ingredient button-->
+            <video id="webcam" autoplay></video>            
+            <button id="capture" style="display: none;">Capture Image</button>            
+            <canvas id="canvas" style="display: none;"></canvas>            
+            <img id="captured-image" alt="Captured Image" style="display: none;">            
+            <input type="file" id="upload" style="display: none;">            
+            <button id="scan">Scan ingredients</button>
+ 
+ 
+            <button id="retake">Retake</button>
+            
+            <form method="get" action="MyServlet" id="imageForm" enctype="multipart/form-data">
+            <button id = "uplod" value="1" name="option">Upload</button>
+            
+            <!--upload ingredient image button-->
+            
+	        <input type="file" id = "file" accept="image/*" style = "display: none;">
+	        <label id="up" for="file" onclick="hide()">Upload ingredients</label>
+	        <button id="falseSubmit" value="1" name="option">Upload</button>
+            </form>
+          
+                       
+            <!--Search ingredient button-->
+            <button id="search" onclick="pop_panel()" type="button">Search ingredients</button>
+            <div id = "panel">
+            	<form method="get" action="MyServlet">
+	                <h1 id = "head2" style="color:aqua">Details</h1>
+	                <input type="text" id="ingr" name="manual_search" placeholder="Ingredient name">
+	                <button id = "detail_btn" name="option" value="2">Search</button>
+	                <h5>You can search any specific ingredient, product and medicines </h5>
+                </form>
+            </div>
+
+        </body>
+        <script src="Jscript.js"></script>
+</html>
